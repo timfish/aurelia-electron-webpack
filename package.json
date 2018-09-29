@@ -16,7 +16,7 @@
     "dev": "yarn dev:main && yarn dev:renderer",
     "build": "cross-env TS_NODE_PRETTY=true TS_NODE_PROJECT=./build/tsconfig.json webpack --config ./build/webpack.production.ts",
     "release": "electron-builder --config ./build/release.yml",
-    "fix": "prettier --write \"./{src,build}/**/*.ts\" && tslint --fix --force --format stylish \"./src/**/*.ts\""
+    "fix": "prettier --write \"./{src,build}/**/*.ts\" && tslint --fix --force --format stylish \"./{src,build}/**/*.ts\""
   },
   "main": "main.js",
   "license": "MIT",

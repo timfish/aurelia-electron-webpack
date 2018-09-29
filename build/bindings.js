@@ -6,8 +6,8 @@
 
 module.exports = function(str) {
   if (str === 'detection.node') {
-    const result = require('./node_modules/usb-detection/build/Release/detection.node');
-    result.path = './node_modules/usb-detection/build/Release/detection.node';
+    const result = require('../node_modules/usb-detection/build/Release/detection.node');
+    result.path = '../node_modules/usb-detection/build/Release/detection.node';
     return result;
   }
 };
