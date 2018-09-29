@@ -11,12 +11,12 @@
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
     "start": "electron ./dist/",
-    "dev:main": "cross-env TS_NODE_PRETTY=true TS_NODE_PROJECT=tsconfig.webpack.json webpack --config webpack.development.ts --config-name main",
-    "dev:renderer": "cross-env TS_NODE_PRETTY=true TS_NODE_PROJECT=tsconfig.webpack.json webpack-dev-server --config webpack.development.ts --config-name renderer --hot --inline",
+    "dev:main": "cross-env TS_NODE_PRETTY=true TS_NODE_PROJECT=./build/tsconfig.json webpack --config ./build/webpack.development.ts --config-name main",
+    "dev:renderer": "cross-env TS_NODE_PRETTY=true TS_NODE_PROJECT=./build/tsconfig.json webpack-dev-server --config ./build/webpack.development.ts --config-name renderer --hot --inline",
     "dev": "yarn dev:main && yarn dev:renderer",
-    "build": "cross-env TS_NODE_PRETTY=true TS_NODE_PROJECT=tsconfig.webpack.json webpack --config webpack.production.ts",
-    "release": "electron-builder --config release.yml",
-    "fix": "prettier --write \"./{src/**/,webpack}*.ts\" && tslint --fix --force --format stylish \"./src/**/*.ts\""
+    "build": "cross-env TS_NODE_PRETTY=true TS_NODE_PROJECT=./build/tsconfig.json webpack --config ./build/webpack.production.ts",
+    "release": "electron-builder --config ./build/release.yml",
+    "fix": "prettier --write \"./{src,build}/**/*.ts\" && tslint --fix --force --format stylish \"./src/**/*.ts\""
   },
   "main": "main.js",
   "license": "MIT",

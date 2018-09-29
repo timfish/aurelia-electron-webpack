@@ -14,7 +14,7 @@ export const outDir = 'dist';
 const commonConfig: webpack.Configuration = {
   stats: 'none',
   output: {
-    path: path.resolve(__dirname, outDir),
+    path: path.resolve(__dirname, '..', outDir),
     filename: '[name].js',
     libraryTarget: 'commonjs2'
   },
@@ -63,7 +63,7 @@ const commonConfig: webpack.Configuration = {
 
 export const renderer = merge({}, commonConfig, {
   name: 'renderer',
-  entry: { renderer: path.resolve(__dirname, 'src/renderer') },
+  entry: { renderer: path.resolve(__dirname, '..', 'src/renderer') },
   target: 'electron-renderer',
 
   optimization: {
@@ -74,14 +74,14 @@ export const renderer = merge({}, commonConfig, {
   plugins: [
     new AureliaPlugin({ aureliaApp: undefined }),
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'src', 'empty-page.html')
+      template: path.join(__dirname, '..', 'src', 'empty-page.html')
     })
   ]
 });
 
 export const main = merge({}, commonConfig, {
   name: 'main',
-  entry: { main: path.resolve(__dirname, 'src/main') },
+  entry: { main: path.resolve(__dirname, '..', 'src/main') },
   target: 'electron-main',
   // Ensure the package.json ends up in the output directory so Electron can be
   // run straight on the output

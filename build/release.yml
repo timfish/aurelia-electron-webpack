@@ -2,7 +2,7 @@
 appId: com.you.app.id
 directories:
   app: 'dist'
-  buildResources: 'resources'
+  buildResources: 'build/resources'
   output: 'releases'
 files:
   # Do not incluse the sourcemaps!
