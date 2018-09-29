@@ -1,0 +1,11 @@
+# electron-builder configuration
+appId: com.you.app.id
+directories:
+  app: 'dist'
+  buildResources: 'resources'
+  output: 'releases'
+files:
+  # Do not incluse the sourcemaps!
+  - '!**/*.map'
+  # We dont need node_modules
+  - '!node_modules'

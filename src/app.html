@@ -1,0 +1,12 @@
+<template>
+    <h1>Connected USB Devices</h1>
+    <ul>
+        <li repeat.for="device of devices">
+            <!-- ${device.vendorId}
+            ${device.productId} -->
+            ${device.manufacturer}
+            ${device.deviceName}
+            ${device.serialNumber}
+        </li>
+    </ul>
+</template>

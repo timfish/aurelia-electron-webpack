@@ -1,0 +1,8 @@
+.DS_STORE
+Thumbs.db
+node_modules
+scripts
+dist
+releases
+bundle-report.html
+*.log

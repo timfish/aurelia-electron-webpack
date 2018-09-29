@@ -1,0 +1,16 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "strict": true,
+    "target": "es2017",
+    "module": "esnext",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "sourceRoot": "src",
+    "sourceMap": true,
+    "baseUrl": "src",
+    "lib": ["es2017", "dom"]
+  },
+  "include": ["./src/**/*.ts", "./custom_typings/**/*.d.ts"]
+}
