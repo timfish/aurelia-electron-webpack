@@ -45,6 +45,12 @@ const commonConfig: webpack.Configuration = {
     ]
   },
 
+  optimization: {
+    splitChunks: {
+      chunks: 'all'
+    }
+  },
+
   plugins: [
     new Stylish(),
     // The 'bindings' library finds native binaries dynamically which is
