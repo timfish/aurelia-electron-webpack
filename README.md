@@ -6,7 +6,7 @@ The app simply lists connected USB devices and updates when changes are detected
 
 - Builds and bundles both main and renderer processes
 - Supports hot-module-reload for the renderer process
-- Bundles all JavaScript and excludes `node_modules` from packaed app for smallest app size
+- Bundles all JavaScript and excludes `node_modules` from packaged app for smallest app size
 - Native modules are built and included
   > **Note:** If a native library uses the [bindings](https://www.npmjs.com/package/bindings) helper
   > to locate the binary, the path must be included in [bindings.js](./bindings.js) so webpack can
