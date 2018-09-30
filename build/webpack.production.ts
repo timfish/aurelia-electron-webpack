@@ -1,5 +1,3 @@
-// tslint:disable:no-implicit-dependencies
-// tslint:disable:object-literal-sort-keys
 import * as CleanWebpackPlugin from 'clean-webpack-plugin';
 import * as path from 'path';
 import * as webpack from 'webpack';

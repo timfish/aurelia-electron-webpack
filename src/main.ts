@@ -1,4 +1,3 @@
-// tslint:disable-next-line:no-implicit-dependencies
 import { app, BrowserWindow, Menu } from 'electron';
 
 let mainWindow: Electron.BrowserWindow | undefined;

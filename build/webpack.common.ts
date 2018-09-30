@@ -1,5 +1,3 @@
-// tslint:disable:no-implicit-dependencies
-// tslint:disable:object-literal-sort-keys
 import { AureliaPlugin } from 'aurelia-webpack-plugin';
 import * as CopyWebpackPlugin from 'copy-webpack-plugin';
 import * as HtmlWebpackPlugin from 'html-webpack-plugin';

@@ -1,5 +1,3 @@
-// tslint:disable:no-implicit-dependencies
-// tslint:disable:object-literal-sort-keys
 import * as webpack from 'webpack';
 import * as merge from 'webpack-merge';
 import * as WriteFilePlugin from 'write-file-webpack-plugin';
