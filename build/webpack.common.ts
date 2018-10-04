@@ -61,7 +61,7 @@ const commonConfig: webpack.Configuration = {
 
 export const renderer = merge({}, commonConfig, {
   name: 'renderer',
-  entry: path.resolve(__dirname, '../src/renderer'),
+  entry: { renderer: path.resolve(__dirname, '../src/renderer') },
   target: 'electron-renderer',
 
   optimization: {
@@ -79,7 +79,7 @@ export const renderer = merge({}, commonConfig, {
 
 export const main = merge({}, commonConfig, {
   name: 'main',
-  entry: path.resolve(__dirname, '../src/main'),
+  entry: { main: path.resolve(__dirname, '../src/main') },
   target: 'electron-main',
   // Ensure the package.json ends up in the output directory so Electron can be
   // run straight on the output
