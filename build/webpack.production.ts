@@ -19,7 +19,10 @@ const renderer = merge({}, common.renderer, config, {
   },
 
   plugins: [
-    new CleanWebpackPlugin([common.outDir], { verbose: false }),
+    new CleanWebpackPlugin([common.outDir], {
+      root: path.resolve(__dirname, '..'),
+      verbose: false
+    }),
     new BundleAnalyzerPlugin({
       reportFilename: path.join(__dirname, 'bundle-report.html'),
       analyzerMode: 'static',
