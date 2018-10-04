@@ -38,15 +38,10 @@ const commonConfig: webpack.Configuration = {
         // Ensures our output sourcemap includes sourcemaps from dependencies
         test: /\.js$/,
         use: 'source-map-loader',
-        enforce: 'pre'
+        enforce: 'pre',
+        exclude: [/reflect-metadata/]
       }
     ]
-  },
-
-  optimization: {
-    splitChunks: {
-      chunks: 'all'
-    }
   },
 
   plugins: [
@@ -71,7 +66,10 @@ export const renderer = merge({}, commonConfig, {
 
   optimization: {
     // Aurelia doesn't like this enabled
-    concatenateModules: false
+    concatenateModules: false,
+    splitChunks: {
+      chunks: 'all'
+    }
   },
 
   plugins: [

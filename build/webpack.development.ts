@@ -14,6 +14,11 @@ const renderer = merge({}, common.renderer, config, {
   output: {
     publicPath: 'http://localhost:8080/dist/'
   },
+
+  optimization: {
+    minimize: false
+  },
+
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     // This ensures that index.html gets written to
