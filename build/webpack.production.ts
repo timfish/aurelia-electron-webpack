@@ -12,6 +12,12 @@ const config: webpack.Configuration = {
 
 const main = merge({}, common.main, config);
 const renderer = merge({}, common.renderer, config, {
+  optimization: {
+    splitChunks: {
+      chunks: 'all'
+    }
+  },
+
   plugins: [
     new CleanWebpackPlugin([common.outDir], { verbose: false }),
     new BundleAnalyzerPlugin({

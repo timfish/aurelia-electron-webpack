@@ -61,28 +61,25 @@ const commonConfig: webpack.Configuration = {
 
 export const renderer = merge({}, commonConfig, {
   name: 'renderer',
-  entry: { renderer: path.resolve(__dirname, '..', 'src/renderer') },
+  entry: path.resolve(__dirname, '../src/renderer'),
   target: 'electron-renderer',
 
   optimization: {
     // Aurelia doesn't like this enabled
-    concatenateModules: false,
-    splitChunks: {
-      chunks: 'all'
-    }
+    concatenateModules: false
   },
 
   plugins: [
     new AureliaPlugin({ aureliaApp: undefined }),
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, '..', 'src', 'empty-page.html')
+      title: require('../package.json').productName
     })
   ]
 });
 
 export const main = merge({}, commonConfig, {
   name: 'main',
-  entry: { main: path.resolve(__dirname, '..', 'src/main') },
+  entry: path.resolve(__dirname, '../src/main'),
   target: 'electron-main',
   // Ensure the package.json ends up in the output directory so Electron can be
   // run straight on the output
