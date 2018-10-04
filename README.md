@@ -7,6 +7,7 @@ The app simply lists connected USB devices and updates when changes are detected
 - Builds and bundles both main and renderer processes
 - Supports hot-module-reload for the renderer process
 - Bundles all JavaScript and excludes `node_modules` from packaged app for smallest app size
+- Use vscode to debug both processes simultaneously with breakpoints in original source files
 - Native modules are built and included
   > **Note:** If a native library uses the [bindings](https://www.npmjs.com/package/bindings) helper
   > to locate the binary, the path must be included in [bindings.js](./build/bindings.js) so webpack
@@ -22,7 +23,7 @@ yarn install
 
 ## Development Build
 
-To run the app in development mode with HMR, run:
+To build the app in development mode with HMR, run:
 
 ```
 yarn dev
@@ -33,6 +34,9 @@ In another console start the app with:
 ```
 yarn start
 ```
+
+Alternatively, in vscode, go to `Debug`, select the `Debug Both Processes` configuration and and
+start the debug session with breakpoints in either process.
 
 ## Production Build
 

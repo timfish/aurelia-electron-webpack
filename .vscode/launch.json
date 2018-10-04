@@ -1,0 +1,49 @@
+{
+  "version": "0.2.0",
+  "compounds": [
+    {
+      "name": "Debug Both Processes",
+      "configurations": ["Debug Main Process", "Attach Renderer Process"]
+    }
+  ],
+  "configurations": [
+    {
+      "name": "Debug Main Process",
+      "type": "node",
+      "request": "launch",
+      "protocol": "inspector",
+      "sourceMapPathOverrides": {
+        "webpack:/*": "${workspaceRoot}/*"
+      },
+      "cwd": "${workspaceRoot}",
+      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
+      "windows": {
+        "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd"
+      },
+      "args": ["${workspaceRoot}/dist", "--remote-debugging-port=9222"]
+    },
+    {
+      "name": "Debug Renderer Process",
+      "type": "chrome",
+      "request": "launch",
+      "cwd": "${workspaceRoot}",
+      "sourceMapPathOverrides": {
+        "webpack:/*": "${workspaceRoot}/*"
+      },
+      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
+      "windows": {
+        "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd"
+      },
+      "runtimeArgs": ["${workspaceRoot}/dist"]
+    },
+    {
+      "name": "Attach Renderer Process",
+      "type": "chrome",
+      "request": "attach",
+      "port": 9222,
+      "sourceMapPathOverrides": {
+        "webpack:/*": "${workspaceRoot}/*"
+      }
+    }
+  ]
+}
