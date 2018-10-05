@@ -1,4 +1,3 @@
-/// <reference types="aurelia-loader-webpack/src/webpack-hot-interface"/>
 import { bootstrap } from 'aurelia-bootstrapper';
 import { Aurelia } from 'aurelia-framework';
 import { App } from './app';
@@ -11,5 +10,6 @@ bootstrap(async (aurelia: Aurelia) => {
     aurelia.use.developmentLogging();
   }
 
-  return aurelia.start().then(() => aurelia.setRoot(App, document.body));
+  await aurelia.start();
+  return aurelia.setRoot(App, document.body);
 });

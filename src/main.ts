@@ -1,9 +1,12 @@
 import { app, BrowserWindow, Menu } from 'electron';
+import environment from './environment';
 
 let mainWindow: Electron.BrowserWindow | undefined;
 
 function createWindow() {
-  // Menu.setApplicationMenu(null);
+  if (!environment.debug) {
+    Menu.setApplicationMenu(null);
+  }
 
   mainWindow = new BrowserWindow({ width: 800, height: 600 });
   mainWindow.loadFile('index.html');

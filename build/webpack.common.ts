@@ -1,4 +1,5 @@
 import { AureliaPlugin } from 'aurelia-webpack-plugin';
+import * as CleanWebpackPlugin from 'clean-webpack-plugin';
 import * as CopyWebpackPlugin from 'copy-webpack-plugin';
 import * as HtmlWebpackPlugin from 'html-webpack-plugin';
 import * as path from 'path';
@@ -46,11 +47,13 @@ const commonConfig: webpack.Configuration = {
 
   plugins: [
     new Stylish(),
+    new webpack.EnvironmentPlugin({
+      DEBUG: process.env.npm_lifecycle_event.startsWith('dev')
+    }),
     // The 'bindings' library finds native binaries dynamically which is
     // incompatible with webpack. This replaces 'bindings' with a file
     // which has static paths
-    new webpack.NormalModuleReplacementPlugin(/^bindings$/, require.resolve('./bindings')),
-    new webpack.NoEmitOnErrorsPlugin()
+    new webpack.NormalModuleReplacementPlugin(/^bindings$/, require.resolve('./bindings'))
   ],
 
   node: {
@@ -59,7 +62,7 @@ const commonConfig: webpack.Configuration = {
   }
 };
 
-export const renderer = merge({}, commonConfig, {
+export const renderer = merge.smart({}, commonConfig, {
   name: 'renderer',
   entry: { renderer: path.resolve(__dirname, '../src/renderer') },
   target: 'electron-renderer',
@@ -77,11 +80,17 @@ export const renderer = merge({}, commonConfig, {
   ]
 });
 
-export const main = merge({}, commonConfig, {
+export const main = merge.smart({}, commonConfig, {
   name: 'main',
   entry: { main: path.resolve(__dirname, '../src/main') },
   target: 'electron-main',
   // Ensure the package.json ends up in the output directory so Electron can be
   // run straight on the output
-  plugins: [new CopyWebpackPlugin(['package.json'])]
+  plugins: [
+    new CleanWebpackPlugin([outDir], {
+      root: path.resolve(__dirname, '..'),
+      verbose: false
+    }),
+    new CopyWebpackPlugin(['package.json'])
+  ]
 });

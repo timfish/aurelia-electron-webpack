@@ -1,4 +1,6 @@
 export default {
-  debug: true,
-  testing: true
+  debug: !!process.env.DEBUG,
+  environment: (process.defaultApp === undefined ? 'production' : 'development') as
+    | 'production'
+    | 'development'
 };

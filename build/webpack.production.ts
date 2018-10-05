@@ -1,4 +1,3 @@
-import * as CleanWebpackPlugin from 'clean-webpack-plugin';
 import * as path from 'path';
 import * as webpack from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
@@ -7,22 +6,14 @@ import * as common from './webpack.common';
 
 const config: webpack.Configuration = {
   mode: 'production',
-  devtool: 'source-map'
+  devtool: 'source-map',
+
+  plugins: [new webpack.NoEmitOnErrorsPlugin()]
 };
 
-const main = merge({}, common.main, config);
-const renderer = merge({}, common.renderer, config, {
-  optimization: {
-    splitChunks: {
-      chunks: 'all'
-    }
-  },
-
+const main = merge.smart({}, common.main, config);
+const renderer = merge.smart({}, common.renderer, config, {
   plugins: [
-    new CleanWebpackPlugin([common.outDir], {
-      root: path.resolve(__dirname, '..'),
-      verbose: false
-    }),
     new BundleAnalyzerPlugin({
       reportFilename: path.join(__dirname, 'bundle-report.html'),
       analyzerMode: 'static',

@@ -4,5 +4,8 @@
   "html.suggest.angular1": false,
   "html.suggest.ionic": false,
   "editor.formatOnSave": true,
-  "tslint.autoFixOnSave": true
+  "tslint.autoFixOnSave": true,
+  "files.exclude": {
+    "node_modules": true
+  }
 }
