@@ -5,12 +5,10 @@ import * as HtmlWebpackPlugin from 'html-webpack-plugin';
 import * as path from 'path';
 import * as webpack from 'webpack';
 import * as merge from 'webpack-merge';
-import * as Stylish from 'webpack-stylish';
 
 export const outDir = 'dist';
 
 const commonConfig: webpack.Configuration = {
-  stats: 'none',
   output: {
     path: path.resolve(__dirname, '..', outDir),
     filename: '[name].js',
@@ -25,8 +23,14 @@ const commonConfig: webpack.Configuration = {
   module: {
     rules: [
       {
-        test: /\.sass$/i,
-        use: ['style-loader', 'css-loader', 'sass-loader']
+        test: /\.scss$/,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
+        issuer: /\.[tj]s$/i
+      },
+      {
+        test: /\.scss$/,
+        use: ['css-loader', 'sass-loader'],
+        issuer: /\.html?$/i
       },
       { test: /\.ts$/i, use: 'awesome-typescript-loader' },
       { test: /\.html$/i, use: 'html-loader' },
@@ -46,7 +50,6 @@ const commonConfig: webpack.Configuration = {
   },
 
   plugins: [
-    new Stylish(),
     new webpack.EnvironmentPlugin({
       DEBUG: process.env.npm_lifecycle_event.startsWith('dev')
     }),
