@@ -11,6 +11,14 @@ import * as WriteFilePlugin from 'write-file-webpack-plugin';
 const isDevServer = process.argv.some(v => v.includes('webpack-dev-server'));
 const appRoot = process.cwd();
 
+function getBundleAnalyzerPlugin(entryPoints: webpack.Entry): BundleAnalyzerPlugin {
+  return new BundleAnalyzerPlugin({
+    reportFilename: `bundle-report-${Object.keys(entryPoints)[0]}.html`,
+    analyzerMode: 'static',
+    openAnalyzer: false
+  });
+}
+
 function when(condition: boolean, ...whenTrue: webpack.Plugin[]): webpack.Plugin[] {
   return condition ? whenTrue : [];
 }
@@ -20,22 +28,16 @@ const commonConfig: ({ production }) => webpack.Configuration = (
 ) => ({
   mode: production ? 'production' : 'development',
   devtool: production ? 'source-map' : 'inline-source-map',
-
   optimization: {
     minimize: production,
     // Aurelia doesn't like this enabled
     concatenateModules: false
   },
-
-  performance: {
-    hints: false
-  },
-
+  performance: { hints: false },
   resolve: {
     extensions: ['.ts', '.js'],
     modules: ['src', 'node_modules'].map(x => path.resolve(x))
   },
-
   module: {
     rules: [
       {
@@ -67,7 +69,6 @@ const commonConfig: ({ production }) => webpack.Configuration = (
       }
     ]
   },
-
   plugins: [
     new webpack.DefinePlugin({
       'process.env.production': JSON.stringify(production)
@@ -78,13 +79,11 @@ const commonConfig: ({ production }) => webpack.Configuration = (
     new webpack.NormalModuleReplacementPlugin(/^bindings$/, require.resolve('./bindings')),
     ...when(production, new CleanWebpackPlugin(['dist'], { root: appRoot, verbose: false }))
   ],
-
   node: {
     __dirname: false,
     __filename: false,
     process: false
   },
-
   externals: ['electron']
 });
 
@@ -92,70 +91,35 @@ const main = (entryPoints: webpack.Entry) => ({ production } = { production: fal
   merge.smart(commonConfig({ production }), {
     entry: entryPoints,
     target: 'electron-main',
-    output: {
-      libraryTarget: 'commonjs2'
-    },
-
+    output: { libraryTarget: 'commonjs2' },
     plugins: [
-      // Helps remove unused code by replacing process checks with static
-      new webpack.DefinePlugin({
-        'process.type': JSON.stringify('browser')
-      }),
-      ...when(
-        production,
-        new BundleAnalyzerPlugin({
-          reportFilename: `bundle-report-${Object.keys(entryPoints)[0]}.html`,
-          analyzerMode: 'static',
-          openAnalyzer: false
-        })
-      ),
+      ...when(production, getBundleAnalyzerPlugin(entryPoints)),
       new CopyWebpackPlugin(['package.json'])
     ]
   });
 
-const renderer = (
-  entryPoints: webpack.Entry,
-  options: { nodeIntegration: boolean; outputHtml: boolean } = {
-    nodeIntegration: true,
-    outputHtml: true
-  }
-) => ({ production } = { production: false }) =>
+const preload = (entryPoints: webpack.Entry) => ({ production } = { production: false }) =>
   merge.smart(commonConfig({ production }), {
     entry: entryPoints,
-    target: options.nodeIntegration ? 'electron-renderer' : 'web',
-    output: {
-      libraryTarget: options.nodeIntegration ? 'commonjs2' : 'this'
-    },
+    target: 'electron-renderer',
+    output: { libraryTarget: 'commonjs2' },
+    plugins: [...when(production, getBundleAnalyzerPlugin(entryPoints))]
+  });
 
+const renderer = (entryPoints: webpack.Entry, nodeIntegration: boolean = true) => (
+  { production } = { production: false }
+) =>
+  merge.smart(commonConfig({ production }), {
+    entry: entryPoints,
+    target: nodeIntegration ? 'electron-renderer' : 'web',
+    output: { libraryTarget: nodeIntegration ? 'commonjs2' : 'this' },
     plugins: [
-      new AureliaPlugin({
-        aureliaApp: undefined,
-        features: { polyfills: 'esnext' }
-      }),
-      // Helps remove unused code by replacing process checks with static
-      new webpack.DefinePlugin({
-        'process.type': JSON.stringify('renderer')
-      }),
-      ...when(
-        production,
-        new BundleAnalyzerPlugin({
-          reportFilename: `bundle-report-${Object.keys(entryPoints)[0]}.html`,
-          analyzerMode: 'static',
-          openAnalyzer: false
-        })
-      ),
+      new AureliaPlugin({ aureliaApp: undefined, features: { polyfills: 'esnext' } }),
+      ...when(production, getBundleAnalyzerPlugin(entryPoints)),
       ...when(isDevServer, new webpack.HotModuleReplacementPlugin(), new WriteFilePlugin()),
-      ...when(
-        // Optionally create an HTML file for each entry point
-        options.outputHtml,
-        ...Object.keys(entryPoints).map(
-          entry =>
-            new HtmlWebpackPlugin({
-              title: '',
-              filename: `${entry}.html`,
-              chunks: [entry]
-            })
-        )
+      // Create an HTML file for each entry point
+      ...Object.keys(entryPoints).map(
+        entry => new HtmlWebpackPlugin({ title: '', filename: `${entry}.html`, chunks: [entry] })
       )
     ]
   });
@@ -168,15 +132,8 @@ export = [
     // page2: path.resolve(appRoot, 'src/page2')
   })
   // Bundle for a renderer with nodeIntegration disabled
-  // renderer(
-  //   { renderer: path.resolve(appRoot, 'src/renderer') },
-  //   { nodeIntegration: false, outputHtml: true }
-  // ),
+  // renderer({ renderer: path.resolve(appRoot, 'src/renderer') }, false),
   //
   // Add an extra entry point for a preload script
-  // renderer(
-  //   { preload: path.resolve(appRoot, 'src/preload') },
-  //   { nodeIntegration: true, outputHtml: false }
-  // ),
-  //
+  // preload({ preload: path.resolve(appRoot, 'src/preload') })
 ];
