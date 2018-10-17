@@ -4,5 +4,4 @@ node_modules
 scripts
 dist
 releases
-bundle-report.html
 *.log

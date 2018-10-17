@@ -4,17 +4,25 @@ import environment from './environment';
 let mainWindow: Electron.BrowserWindow | undefined;
 
 function createWindow() {
-  if (!environment.debug) {
+  if (environment.environment === 'production') {
     Menu.setApplicationMenu(null);
   }
 
-  mainWindow = new BrowserWindow({ width: 800, height: 600 });
-  mainWindow.loadFile('index.html');
+  mainWindow = new BrowserWindow({ width: 800, height: 600, show: false });
+  mainWindow.loadFile('renderer.html');
 
-  // mainWindow.webContents.openDevTools()
+  if (environment.devTools) {
+    mainWindow.webContents.openDevTools();
+  }
 
   mainWindow.on('closed', () => {
     mainWindow = undefined;
+  });
+
+  mainWindow.on('ready-to-show', () => {
+    if (mainWindow) {
+      mainWindow.show();
+    }
   });
 }
 

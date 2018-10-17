@@ -10,11 +10,10 @@
   },
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
-    "start": "electron ./dist/",
-    "dev:main": "cross-env TS_NODE_PRETTY=true TS_NODE_PROJECT=./build/tsconfig.json webpack --config ./build/webpack.development.ts --config-name main",
-    "dev:renderer": "cross-env TS_NODE_PRETTY=true TS_NODE_PROJECT=./build/tsconfig.json webpack-dev-server --config ./build/webpack.development.ts --config-name renderer --hot --inline",
-    "dev": "yarn dev:main && yarn dev:renderer",
-    "build": "cross-env TS_NODE_PRETTY=true TS_NODE_PROJECT=./build/tsconfig.json webpack --config ./build/webpack.production.ts",
+    "start": "electron ./dist/ --debug",
+    "build": "cross-env TS_NODE_PRETTY=true TS_NODE_PROJECT=./build/tsconfig.json webpack --config ./build/webpack.config.ts --env.production",
+    "build:dev": "cross-env TS_NODE_PRETTY=true TS_NODE_PROJECT=./build/tsconfig.json webpack --config ./build/webpack.config.ts",
+    "watch": "yarn build:dev && cross-env TS_NODE_PRETTY=true TS_NODE_PROJECT=./build/tsconfig.json webpack-dev-server --config ./build/webpack.config.ts --hot --inline",
     "release": "electron-builder --config ./build/release.yml",
     "fix": "prettier --write \"./{src,build}/**/*.ts\" && tslint --fix --force --format stylish \"./{src,build}/**/*.ts\""
   },

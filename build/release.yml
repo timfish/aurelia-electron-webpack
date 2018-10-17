@@ -4,8 +4,13 @@ directories:
   app: 'dist'
   buildResources: 'build/resources'
   output: 'releases'
+# Ensure that native binaries do not get packed in the app.asar archive
+asarUnpack:
+  - '**/*.node'
 files:
-  # Do not incluse the sourcemaps!
+  # Do not include sourcemaps
   - '!**/*.map'
   # We dont need node_modules
   - '!node_modules'
+  # or the bundle reports
+  - '!bundle-report-*.html'

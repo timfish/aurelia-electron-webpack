@@ -5,7 +5,7 @@ A basic boilerplate to build Electron apps with Aurelia and Webpack.
 The app simply lists connected USB devices and updates when changes are detected.
 
 - Builds and bundles both main and renderer processes
-- Supports hot-module-reload for the renderer process
+- Supports hot-module-reload in the renderer process
 - Bundles all JavaScript and excludes `node_modules` from packaged app for smallest app size
 - Use vscode to debug both processes simultaneously with breakpoints in original source files
 - Native modules are built and included
@@ -23,13 +23,19 @@ yarn install
 
 ## Development Build
 
-To build the app in development mode with HMR, run:
+To build the app in development mode run:
 
 ```
-yarn dev
+yarn build:dev
 ```
 
-In another console start the app with:
+To build the app in development/watch mode with HMR in the renderer, run:
+
+```
+yarn watch
+```
+
+and in another console start the app with:
 
 ```
 yarn start
