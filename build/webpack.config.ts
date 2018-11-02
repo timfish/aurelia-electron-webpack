@@ -28,6 +28,7 @@ const commonConfig: ({ production }) => webpack.Configuration = (
 ) => ({
   mode: production ? 'production' : 'development',
   devtool: production ? 'source-map' : 'inline-source-map',
+  output: { libraryTarget: 'commonjs2' },
   optimization: {
     minimize: production,
     // Aurelia doesn't like this enabled
@@ -91,7 +92,6 @@ const main = (entryPoints: webpack.Entry) => ({ production } = { production: fal
   merge.smart(commonConfig({ production }), {
     entry: entryPoints,
     target: 'electron-main',
-    output: { libraryTarget: 'commonjs2' },
     plugins: [
       ...when(production, getBundleAnalyzerPlugin(entryPoints)),
       new CopyWebpackPlugin(['package.json'])
@@ -102,7 +102,6 @@ const preload = (entryPoints: webpack.Entry) => ({ production } = { production: 
   merge.smart(commonConfig({ production }), {
     entry: entryPoints,
     target: 'electron-renderer',
-    output: { libraryTarget: 'commonjs2' },
     plugins: [...when(production, getBundleAnalyzerPlugin(entryPoints))]
   });
 
