@@ -36,11 +36,25 @@ const commonConfig: ({ production }) => webpack.Configuration = (
   },
   performance: { hints: false },
   resolve: {
+    mainFields: ['module', 'main'],
     extensions: ['.ts', '.js'],
     modules: ['src', 'node_modules'].map(x => path.resolve(x))
   },
   module: {
     rules: [
+      {
+        // Relocates assets that are located dynamically at runtime and rewrites
+        // their location. This is particularly helpful for node binaries
+        // located via the bindings or node-pre-gyp libraries
+        test: /\.(m?js|node)$/,
+        parser: { amd: false },
+        use: {
+          loader: '@zeit/webpack-asset-relocator-loader',
+          options: {
+            outputAssetBase: 'assets'
+          }
+        }
+      },
       {
         test: /\.scss$/,
         use: ['style-loader', 'css-loader', 'sass-loader'],
@@ -56,10 +70,7 @@ const commonConfig: ({ production }) => webpack.Configuration = (
       {
         // Includes .node binaries in the output
         test: /\.node$/,
-        loader: 'awesome-node-loader',
-        options: {
-          name: '[name]-[hash:10].[ext]'
-        }
+        loader: 'awesome-node-loader'
       },
       {
         // Ensures our output sourcemap includes sourcemaps from dependencies
@@ -74,10 +85,6 @@ const commonConfig: ({ production }) => webpack.Configuration = (
     new webpack.DefinePlugin({
       'process.env.production': JSON.stringify(production)
     }),
-    // The 'bindings' library finds native binaries dynamically which is
-    // incompatible with webpack. This replaces 'bindings' with a file
-    // which has static paths 🤷
-    new webpack.NormalModuleReplacementPlugin(/^bindings$/, require.resolve('./bindings')),
     ...when(production, new CleanWebpackPlugin(['dist'], { root: appRoot, verbose: false }))
   ],
   node: {
