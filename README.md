@@ -9,9 +9,6 @@ The app simply lists connected USB devices and updates when changes are detected
 - Bundles all JavaScript and excludes `node_modules` from packaged app for smallest app size
 - Use vscode to debug both processes simultaneously with breakpoints in original source files
 - Native modules are built and included
-  > **Note:** If a native library uses the [bindings](https://www.npmjs.com/package/bindings) helper
-  > to locate the binary, the path must be included in [bindings.js](./build/bindings.js) so webpack
-  > can find it.
 
 ## Getting Started
 
