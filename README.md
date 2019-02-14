@@ -6,7 +6,8 @@ The app simply lists connected USB devices and updates when changes are detected
 
 - Builds and bundles both main and renderer processes
 - Supports hot-module-reload in the renderer process
-- Bundles all JavaScript and excludes `node_modules` from packaged app for smallest app size
+- Bundles all JavaScript and excludes `node_modules` from packaged app for smallest app size and
+  fastest startup
 - Use vscode to debug both processes simultaneously with breakpoints in original source files
 - Native modules are built and included
 
@@ -38,8 +39,8 @@ and in another console start the app with:
 yarn start
 ```
 
-Alternatively, in vscode, go to `Debug`, select the `Debug Both Processes` configuration and and
-start the debug session with breakpoints in either process.
+Alternatively, in vscode, go to `Debug`, select the `Debug Both Processes` configuration and start
+the debug session with breakpoints in either process.
 
 ## Production Build
 
