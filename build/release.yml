@@ -10,7 +10,5 @@ asarUnpack:
 files:
   # Do not include sourcemaps
   - '!**/*.map'
-  # We dont need node_modules
-  - '!node_modules'
   # or the bundle reports
   - '!bundle-report-*.html'
