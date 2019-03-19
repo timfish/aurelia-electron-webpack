@@ -33,7 +33,7 @@ export class ElectronProcessPlugin implements webpack.Plugin {
 export class CopyPkgJsonAndRemoveKeys implements webpack.Plugin {
   constructor(
     private file: string = 'package.json',
-    private properties: string[] = ['dependencies', 'devDependencies']
+    private properties: string[] = ['dependencies']
   ) {}
 
   public apply(compiler: webpack.Compiler): void {
