@@ -1,20 +1,29 @@
 {
-  "compileOnSave": false,
   "compilerOptions": {
-    "strict": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noUnusedLocals": true,
-    "target": "es2017",
-    "module": "esnext",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "moduleResolution": "node",
-    "sourceRoot": "src",
+    "pretty": true,
     "sourceMap": true,
-    "baseUrl": "src",
-    "lib": ["es2017", "dom"]
+    "strict": true,
+    "esModuleInterop": true,
+    "target": "es2019",
+    "baseUrl": ".",
+    "outDir": "dist",
+    "resolveJsonModule": true,
+    "lib": [
+      "esnext",
+      "dom"
+    ],
   },
-  "include": ["./src/**/*.ts", "./custom_typings/**/*.d.ts"]
+  "include": [
+    "src/**/*"
+  ]
 }
