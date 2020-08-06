@@ -1,3 +1,3 @@
 export class MyApp {
-  public message = "💖 Hello World!";
+  public message = '💖 Hello World!';
 }
