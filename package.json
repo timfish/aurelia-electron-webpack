@@ -78,7 +78,7 @@
     "@typescript-eslint/eslint-plugin": "^4.8.2",
     "@typescript-eslint/parser": "^4.8.2",
     "css-loader": "^5.0.1",
-    "electron": "11.0.3",
+    "electron": "22.3.21",
     "eslint": "^7.14.0",
     "eslint-plugin-import": "^2.22.1",
     "fork-ts-checker-webpack-plugin": "^6.0.4",
